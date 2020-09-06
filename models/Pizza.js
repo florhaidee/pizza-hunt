@@ -4,10 +4,14 @@ const moment = require('moment');
 const PizzaSchema = new Schema(
   {
     pizzaName: {
-      type: String
+      type: String,
+      required: 'You need to provide a pizza name!',
+      trim: true
     },
     createdBy: {
-      type: String
+      type: String,
+      required: true,
+      trim: true
     },
     createdAt: {
       type: Date,
@@ -16,6 +20,10 @@ const PizzaSchema = new Schema(
     },
     size: {
       type: String,
+      // in this case we can't provide a custom error message, will have to implement the 'validate' option from mongoose
+      required: true,
+      //validate the size available to create a pizza, user have to select from the provided array of options
+      enum: ['Personal', 'Small', 'Medium', 'Large', 'Extra Large'],
       default: 'Large'
     },
     toppings: [],
